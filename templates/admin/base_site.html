@@ -1,6 +1,9 @@
 {% extends "admin/base.html" %}
 {% load i18n static resume_tags %}
 
+{# Django dark_mode.css va theme.js Neon dizayn bilan ziddiyat qiladi #}
+{% block dark-mode-vars %}{% endblock %}
+
 {% block title %}{% if subtitle %}{{ subtitle }} | {% endif %}{{ title }} | {% uitext "admin_site" %}{% endblock %}
 
 {% block branding %}
