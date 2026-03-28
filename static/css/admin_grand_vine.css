@@ -1,0 +1,137 @@
+/* Admin panel — Grand vine palitrasi (tashqi sayt temasidan mustaqil) */
+
+#header {
+  background: linear-gradient(135deg, #4a2430 0%, #6b2d3c 45%, #3d1f28 100%);
+  color: #fff8f2;
+  border-bottom: 1px solid rgba(255, 248, 242, 0.12);
+}
+
+#header a:link,
+#header a:visited {
+  color: #fff8f2;
+}
+
+#branding h1,
+#branding h1 a:link,
+#branding h1 a:visited {
+  color: #fff8f2;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+#user-tools {
+  font-weight: 500;
+}
+
+#user-tools a:link,
+#user-tools a:visited {
+  color: #f5e0c8;
+}
+
+#user-tools a:hover {
+  color: #ffffff;
+}
+
+div.breadcrumbs {
+  background: #f4ebe3;
+  border-bottom: 1px solid rgba(107, 45, 60, 0.12);
+  color: #3d2428;
+}
+
+div.breadcrumbs a {
+  color: #6b2d3c;
+}
+
+.module h2,
+.module caption,
+.inline-group h2 {
+  background: #6b2d3c;
+  color: #fff8f2;
+}
+
+a.section:link,
+a.section:visited {
+  color: #6b2d3c;
+}
+
+.button,
+input[type="submit"],
+input[type="button"],
+.submit-row input,
+a.button {
+  background: #6b2d3c;
+  color: #fff8f2;
+  border-radius: 8px;
+}
+
+.button:hover,
+input[type="submit"]:hover,
+input[type="button"]:hover,
+.submit-row input:hover,
+a.button:hover {
+  background: #8a3d50;
+}
+
+.button.default,
+input[type="submit"].default,
+.submit-row input.default {
+  background: #3d2428;
+}
+
+.object-tools a {
+  background: #6b2d3c;
+  border-radius: 8px;
+}
+
+.object-tools a:hover {
+  background: #8a3d50;
+}
+
+.admin-lang-switch {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  flex-wrap: wrap;
+  margin-left: 1rem;
+  vertical-align: middle;
+}
+
+.admin-lang-switch__label {
+  font-size: 0.75rem;
+  opacity: 0.9;
+  margin-right: 0.25rem;
+}
+
+.admin-lang-switch__form {
+  display: inline;
+  margin: 0;
+}
+
+.admin-lang-switch__btn {
+  cursor: pointer;
+  border: 1px solid rgba(255, 248, 242, 0.35);
+  background: rgba(255, 248, 242, 0.12);
+  color: #fff8f2;
+  padding: 0.25rem 0.55rem;
+  border-radius: 999px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+}
+
+.admin-lang-switch__btn:hover {
+  background: rgba(255, 248, 242, 0.22);
+}
+
+.admin-lang-switch__btn.is-active {
+  background: #fff8f2;
+  color: #6b2d3c;
+  border-color: transparent;
+}
+
+#nav-global {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.25rem;
+}

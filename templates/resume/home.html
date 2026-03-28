@@ -1,0 +1,108 @@
+{% extends "base.html" %}
+{% load static resume_tags %}
+
+{% block content %}
+<section class="hero">
+  <div class="hero__layout">
+    <div class="hero__visual">
+      {% if profile.photo %}
+        <img class="hero__photo" src="{{ profile.photo.url }}" alt="{% localized_field profile 'full_name' %}">
+      {% else %}
+        <div class="hero__photo hero__photo--placeholder" aria-hidden="true"></div>
+      {% endif %}
+    </div>
+    <div class="hero__text">
+      <h1 class="hero__name">{% localized_field profile "full_name" %}</h1>
+      <p class="hero__headline">{% localized_field profile "headline" %}</p>
+      <ul class="hero__contacts">
+        {% if profile.email %}
+          <li><a href="mailto:{{ profile.email }}">{{ profile.email }}</a></li>
+        {% endif %}
+        {% if profile.phone %}
+          <li><a href="tel:{{ profile.phone }}">{{ profile.phone }}</a></li>
+        {% endif %}
+        {% localized_field profile "location" as loc %}
+        {% if loc %}
+          <li>{{ loc }}</li>
+        {% endif %}
+      </ul>
+      <div class="hero__social">
+        {% if profile.website %}
+          <a class="chip" href="{{ profile.website }}" target="_blank" rel="noopener noreferrer">{% uitext "website" %}</a>
+        {% endif %}
+        {% if profile.linkedin %}
+          <a class="chip" href="{{ profile.linkedin }}" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+        {% endif %}
+        {% if profile.github %}
+          <a class="chip" href="{{ profile.github }}" target="_blank" rel="noopener noreferrer">GitHub</a>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</section>
+
+{% localized_field profile "about" as about_text %}
+{% if about_text %}
+<section class="section section--about">
+  <div class="section__inner">
+    <h2 class="section__title">{% uitext "about_me" %}</h2>
+    <div class="prose">{{ about_text|linebreaksbr }}</div>
+  </div>
+</section>
+{% endif %}
+
+{% if certificates %}
+<section class="section section--certs">
+  <div class="section__inner">
+    <h2 class="section__title">{% uitext "certificates" %}</h2>
+    <div class="card-grid">
+      {% for cert in certificates %}
+        <article class="card card--cert">
+          {% if cert.image %}
+            <div class="card__media">
+              <img src="{{ cert.image.url }}" alt="{% localized_field cert 'title' %}">
+            </div>
+          {% endif %}
+          <div class="card__body">
+            <h3 class="card__title">{% localized_field cert "title" %}</h3>
+            {% localized_field cert "issuer" as issuer %}
+            {% if issuer %}
+              <p class="card__meta">{{ issuer }}</p>
+            {% endif %}
+            {% if cert.issued_on %}
+              <p class="card__date">{{ cert.issued_on|date:"SHORT_DATE_FORMAT" }}</p>
+            {% endif %}
+            {% localized_field cert "description" as cdesc %}
+            {% if cdesc %}
+              <p class="card__desc">{{ cdesc|linebreaksbr }}</p>
+            {% endif %}
+            {% if cert.document %}
+              <a class="card__link" href="{{ cert.document.url }}" target="_blank" rel="noopener noreferrer">{% uitext "view_document" %}</a>
+            {% endif %}
+          </div>
+        </article>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endif %}
+
+{% if interests %}
+<section class="section section--interests">
+  <div class="section__inner">
+    <h2 class="section__title">{% uitext "interests" %}</h2>
+    <ul class="interest-list">
+      {% for item in interests %}
+        <li class="interest-list__item">
+          <span class="interest-list__label">{% localized_field item "label" %}</span>
+          {% localized_field item "detail" as det %}
+          {% if det %}
+            <div class="interest-list__detail">{{ det|linebreaksbr }}</div>
+          {% endif %}
+        </li>
+      {% endfor %}
+    </ul>
+  </div>
+</section>
+{% endif %}
+{% endblock %}
