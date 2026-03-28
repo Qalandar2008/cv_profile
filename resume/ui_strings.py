@@ -15,6 +15,8 @@ _TEXTS: dict[str, dict[str, str]] = {
         "admin_title": "CV resume administration",
         "admin_site": "CV Admin",
         "admin_dashboard": "Dashboard",
+        "cv_content_lang": "CV content language",
+        "cv_content_lang_hint": "Fields below show text for the selected language only. Switch language, then Save.",
     },
     "uz": {
         "resume": "Rezyume",
@@ -28,6 +30,8 @@ _TEXTS: dict[str, dict[str, str]] = {
         "admin_title": "CV rezyume boshqaruvi",
         "admin_site": "CV admin",
         "admin_dashboard": "Boshqaruv paneli",
+        "cv_content_lang": "CV matni tili",
+        "cv_content_lang_hint": "Quyidagi maydonlar faqat tanlangan til uchun. Tilni almashtiring, keyin Saqlash.",
     },
     "ru": {
         "resume": "Резюме",
@@ -41,6 +45,8 @@ _TEXTS: dict[str, dict[str, str]] = {
         "admin_title": "Администрирование резюме",
         "admin_site": "CV Админ",
         "admin_dashboard": "Панель управления",
+        "cv_content_lang": "Язык текста резюме",
+        "cv_content_lang_hint": "Поля ниже — только для выбранного языка. Смените язык и нажмите «Сохранить».",
     },
 }
 

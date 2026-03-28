@@ -3,11 +3,14 @@ from django.contrib.auth.admin import GroupAdmin, UserAdmin
 from django.contrib.auth.models import Group, User
 from django.utils.translation import gettext_lazy as _
 
+from .admin_content_lang import get_content_lang
+from .admin_forms import CertificateForm, InterestForm, ResumeProfileForm
+from .admin_mixins import ContentLanguageAdminMixin
 from .admin_site import cv_admin_site
+from .models import Certificate, Interest, ResumeProfile, SiteSettings
 
 cv_admin_site.register(User, UserAdmin)
 cv_admin_site.register(Group, GroupAdmin)
-from .models import Certificate, Interest, ResumeProfile, SiteSettings
 
 
 @admin.register(SiteSettings, site=cv_admin_site)
@@ -22,12 +25,17 @@ class SiteSettingsAdmin(admin.ModelAdmin):
 
 
 @admin.register(ResumeProfile, site=cv_admin_site)
-class ResumeProfileAdmin(admin.ModelAdmin):
+class ResumeProfileAdmin(ContentLanguageAdminMixin, admin.ModelAdmin):
+    form = ResumeProfileForm
     fieldsets = (
+        (
+            _("Resume text"),
+            {
+                "description": _("Edit one language at a time. Use the language strip above, then Save."),
+                "fields": ("full_name", "headline", "about", "location"),
+            },
+        ),
         (_("Photo & contacts"), {"fields": ("photo", "email", "phone", "website", "linkedin", "github")}),
-        (_("English"), {"fields": ("full_name_en", "headline_en", "about_en", "location_en")}),
-        (_("Uzbek"), {"fields": ("full_name_uz", "headline_uz", "about_uz", "location_uz")}),
-        (_("Russian"), {"fields": ("full_name_ru", "headline_ru", "about_ru", "location_ru")}),
     )
 
     def has_add_permission(self, request):
@@ -38,26 +46,47 @@ class ResumeProfileAdmin(admin.ModelAdmin):
 
 
 @admin.register(Certificate, site=cv_admin_site)
-class CertificateAdmin(admin.ModelAdmin):
-    list_display = ("title_en", "issued_on", "sort_order")
+class CertificateAdmin(ContentLanguageAdminMixin, admin.ModelAdmin):
+    form = CertificateForm
+    list_display = ("title_display", "issued_on", "sort_order")
     list_editable = ("sort_order",)
     ordering = ("sort_order", "pk")
+
+    @admin.display(description=_("Title"))
+    def title_display(self, obj):
+        lang = get_content_lang(getattr(self, "request", None))
+        return getattr(obj, f"title_{lang}", "") or obj.title_en
+
+    def changelist_view(self, request, extra_context=None):
+        self.request = request
+        return super().changelist_view(request, extra_context)
+
     fieldsets = (
-        (_("English"), {"fields": ("title_en", "issuer_en", "description_en")}),
-        (_("Uzbek"), {"fields": ("title_uz", "issuer_uz", "description_uz")}),
-        (_("Russian"), {"fields": ("title_ru", "issuer_ru", "description_ru")}),
-        (_("Files & meta"), {"fields": ("image", "document", "issued_on", "sort_order")}),
+        (
+            _("Certificate text"),
+            {"fields": ("title", "issuer", "description")},
+        ),
+        (_("Files & order"), {"fields": ("image", "document", "issued_on", "sort_order")}),
     )
 
 
 @admin.register(Interest, site=cv_admin_site)
-class InterestAdmin(admin.ModelAdmin):
-    list_display = ("label_en", "sort_order")
+class InterestAdmin(ContentLanguageAdminMixin, admin.ModelAdmin):
+    form = InterestForm
+    list_display = ("label_display", "sort_order")
     list_editable = ("sort_order",)
     ordering = ("sort_order", "pk")
+
+    @admin.display(description=_("Interest"))
+    def label_display(self, obj):
+        lang = get_content_lang(getattr(self, "request", None))
+        return getattr(obj, f"label_{lang}", "") or obj.label_en
+
+    def changelist_view(self, request, extra_context=None):
+        self.request = request
+        return super().changelist_view(request, extra_context)
+
     fieldsets = (
-        (_("English"), {"fields": ("label_en", "detail_en")}),
-        (_("Uzbek"), {"fields": ("label_uz", "detail_uz")}),
-        (_("Russian"), {"fields": ("label_ru", "detail_ru")}),
+        (_("Interest text"), {"fields": ("label", "detail")}),
         (_("Order"), {"fields": ("sort_order",)}),
     )
