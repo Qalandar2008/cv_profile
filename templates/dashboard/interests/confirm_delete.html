@@ -1,0 +1,17 @@
+{% extends "dashboard/base.html" %}
+{% block title %}O‘chirish{% endblock %}
+{% block mobile_title %}O‘chirish{% endblock %}
+
+{% block content %}
+<div class="mx-auto max-w-lg">
+  <div class="rounded-2xl border border-red-400/20 bg-[#111827] p-8 shadow-card">
+    <h1 class="text-xl font-bold text-white">Qiziqishni o‘chirish</h1>
+    <p class="mt-2 text-sm text-slate-400">«<span class="font-medium text-slate-200">{{ display_label }}</span>» o‘chiriladi.</p>
+    <form method="post" class="mt-8 flex flex-wrap gap-3">
+      {% csrf_token %}
+      <button type="submit" class="inline-flex flex-1 justify-center rounded-xl bg-red-500 px-5 py-3 text-sm font-semibold text-white hover:bg-red-600 sm:flex-none">Ha, o‘chirish</button>
+      <a href="{% url 'dashboard:interests' %}" class="inline-flex flex-1 justify-center rounded-xl border border-slate-600 px-5 py-3 text-sm text-slate-300 hover:bg-slate-800 sm:flex-none">Bekor</a>
+    </form>
+  </div>
+</div>
+{% endblock %}

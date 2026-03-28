@@ -33,5 +33,6 @@
       <input type="hidden" name="next" value="{{ switch_urls.ru }}">
       <button type="submit" name="language" value="ru" class="admin-lang-switch__btn{% if LANGUAGE_CODE|slice:':2' == 'ru' %} is-active{% endif %}">RUS</button>
     </form>
+    <a href="{% url 'dashboard:index' %}" class="admin-lang-switch__btn" style="text-decoration:none;border-color:rgba(0,255,200,0.45);">SaaS panel</a>
   </div>
 {% endblock %}
