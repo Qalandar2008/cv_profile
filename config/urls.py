@@ -1,18 +1,21 @@
 from django.conf import settings
 from django.conf.urls.static import static
 from django.urls import include, path
-
-from resume.admin_site import cv_admin_site
+from django.views.generic import RedirectView
 
 """
-Til: set_language (/i18n/setlang/) + cookie + CookieAwareLocaleMiddleware.
-i18n_patterns olib tashlandi — / va /admin/ har doim topiladi (404 bo‘lmasin).
+Boshqaruv: faqat yangi panel — /admin/ ostida (dashboard URLconf).
+Eski django.contrib.admin olib tashlangan.
+/dashboard/ → /admin/ ga yo‘naltiriladi.
 """
 
 urlpatterns = [
     path("i18n/", include("django.conf.urls.i18n")),
-    path("admin/", cv_admin_site.urls),
-    path("dashboard/", include("resume.dashboard_urls", namespace="dashboard")),
+    path("admin/", include("resume.dashboard_urls", namespace="dashboard")),
+    path(
+        "dashboard/",
+        RedirectView.as_view(pattern_name="dashboard:index", permanent=False),
+    ),
     path("", include("resume.urls")),
 ]
 
